@@ -54,10 +54,10 @@ include $(PREBUILT_STATIC_LIBRARY)
 
 # build our app's shared lib
 include $(CLEAR_VARS)
-LOCAL_CFLAGS := -std=c++11
+LOCAL_CFLAGS := -std=c++14
 LOCAL_MODULE    := hello-libs
 LOCAL_SRC_FILES := $(JNI_SRC_PATH)/hello-libs.cpp
-LOCAL_LDLIBS    := -llog -landroid
+#LOCAL_LDLIBS    := -llog -landroid
 LOCAL_STATIC_LIBRARIES := local_msgpack_static local_gopendht_static
 #LOCAL_STATIC_LIBRARIES := local_gmath
 
