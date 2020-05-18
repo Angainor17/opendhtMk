@@ -44,6 +44,13 @@ LOCAL_EXPORT_C_INCLUDES := $(EXT_LIB_ROOT)/gmsgpack/include
 include $(PREBUILT_STATIC_LIBRARY)
 
 # ###############################################################################################
+
+LOCAL_MODULE := local_gnutls_shared
+LOCAL_SRC_FILES := $(EXT_LIB_ROOT)/gnutls/lib/$(TARGET_ARCH_ABI)/libgnutls.so
+LOCAL_EXPORT_C_INCLUDES := $(EXT_LIB_ROOT)/gnutls/include
+include $(PREBUILT_SHARED_LIBRARY)
+
+
 # ###############################################################################################
 #include $(CLEAR_VARS)
 #LOCAL_MODULE := local_gperf
@@ -57,12 +64,13 @@ include $(CLEAR_VARS)
 LOCAL_CFLAGS := -std=c++14
 LOCAL_MODULE    := hello-libs
 LOCAL_SRC_FILES := $(JNI_SRC_PATH)/hello-libs.cpp
-#LOCAL_LDLIBS    := -llog -landroid
 LOCAL_STATIC_LIBRARIES := local_msgpack_static local_gopendht_static
+LOCAL_SHARED_LIBRARIES := local_gnutls_shared
+
+
+
+#LOCAL_LDLIBS    := -llog -landroid
 #LOCAL_STATIC_LIBRARIES := local_gmath
-
-#LOCAL_SHARED_LIBRARIES := local_gopendht_shared
-
 #LOCAL_SHARED_LIBRARIES := local_gperf
 
 include $(BUILD_SHARED_LIBRARY)
