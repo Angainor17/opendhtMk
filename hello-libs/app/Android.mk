@@ -22,34 +22,48 @@ JNI_SRC_PATH := C:/Users/angai/AndroidStudioProjects/ndk-samples/hello-libs/app/
 EXT_LIB_ROOT := C:/Users/angai/AndroidStudioProjects/ndk-samples/hello-libs/distribution
 #EXT_LIB_ROOT := $(SAMPLES_ROOT)/hello-libs/distribution
 
-include $(CLEAR_VARS)
 
 # import 2 libs: remember to generate them SEPARATELY in terminal/command line first!
+#include $(CLEAR_VARS)
+#LOCAL_MODULE := local_gopendht_static
+#LOCAL_SRC_FILES := $(EXT_LIB_ROOT)/gopendht/lib/$(TARGET_ARCH_ABI)/libopendht.a
+#LOCAL_EXPORT_C_INCLUDES := $(EXT_LIB_ROOT)/gopendht/include
+#include $(PREBUILT_STATIC_LIBRARY)
+
+# ###############################################################################################
+include $(CLEAR_VARS)
 LOCAL_MODULE := local_gopendht_static
 LOCAL_SRC_FILES := $(EXT_LIB_ROOT)/gopendht/lib/$(TARGET_ARCH_ABI)/libopendht.a
 LOCAL_EXPORT_C_INCLUDES := $(EXT_LIB_ROOT)/gopendht/include
 include $(PREBUILT_STATIC_LIBRARY)
-
 # ###############################################################################################
+#include $(CLEAR_VARS)
+#LOCAL_MODULE := local_gopendht_shared
+#LOCAL_SRC_FILES := $(EXT_LIB_ROOT)/gopendht/lib/$(TARGET_ARCH_ABI)/libopendht_2_0_0.so
+#LOCAL_EXPORT_C_INCLUDES := $(EXT_LIB_ROOT)/gopendht/include
+#include $(PREBUILT_SHARED_LIBRARY)
+# ###############################################################################################
+
 include $(CLEAR_VARS)
-LOCAL_MODULE := local_gopendht_shared
-LOCAL_SRC_FILES := $(EXT_LIB_ROOT)/gopendht/lib/$(TARGET_ARCH_ABI)/libopendht.so
-LOCAL_EXPORT_C_INCLUDES := $(EXT_LIB_ROOT)/gopendht/include
-include $(PREBUILT_SHARED_LIBRARY)
-# ###############################################################################################
-
 LOCAL_MODULE := local_msgpack_static
 LOCAL_SRC_FILES := $(EXT_LIB_ROOT)/gmsgpack/lib/$(TARGET_ARCH_ABI)/libmsgpackc.a
 LOCAL_EXPORT_C_INCLUDES := $(EXT_LIB_ROOT)/gmsgpack/include
 include $(PREBUILT_STATIC_LIBRARY)
 
 # ###############################################################################################
+#include $(CLEAR_VARS)
+#LOCAL_MODULE := local_gnutls_shared
+#LOCAL_SRC_FILES := $(EXT_LIB_ROOT)/gnutls/lib/$(TARGET_ARCH_ABI)/libgnutls_30_0_0.so
+#LOCAL_EXPORT_C_INCLUDES := $(EXT_LIB_ROOT)/gnutls/include
+#include $(PREBUILT_SHARED_LIBRARY)
 
-LOCAL_MODULE := local_gnutls_shared
-LOCAL_SRC_FILES := $(EXT_LIB_ROOT)/gnutls/lib/$(TARGET_ARCH_ABI)/libgnutls.so
+# ###############################################################################################
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := local_gnutls_static
+LOCAL_SRC_FILES := $(EXT_LIB_ROOT)/gnutls/lib/$(TARGET_ARCH_ABI)/libgnutls.a
 LOCAL_EXPORT_C_INCLUDES := $(EXT_LIB_ROOT)/gnutls/include
-include $(PREBUILT_SHARED_LIBRARY)
-
+include $(PREBUILT_STATIC_LIBRARY)
 
 # ###############################################################################################
 #include $(CLEAR_VARS)
@@ -62,16 +76,10 @@ include $(PREBUILT_SHARED_LIBRARY)
 # build our app's shared lib
 include $(CLEAR_VARS)
 LOCAL_CFLAGS := -std=c++14
-LOCAL_MODULE    := hello-libs
+LOCAL_MODULE    := hellolibs
 LOCAL_SRC_FILES := $(JNI_SRC_PATH)/hello-libs.cpp
-LOCAL_STATIC_LIBRARIES := local_msgpack_static local_gopendht_static
-LOCAL_SHARED_LIBRARIES := local_gnutls_shared
-
-
-
-#LOCAL_LDLIBS    := -llog -landroid
-#LOCAL_STATIC_LIBRARIES := local_gmath
-#LOCAL_SHARED_LIBRARIES := local_gperf
+#LOCAL_SHARED_LIBRARIES := local_gopendht_shared
+LOCAL_STATIC_LIBRARIES := local_gnutls_static local_msgpack_static local_gopendht_static
+LOCAL_LDLIBS    := -llog -landroid
 
 include $(BUILD_SHARED_LIBRARY)
-
